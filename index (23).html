@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xgames - Play Fun Browser Games</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .logo {
+            font-size: 50px;
+            font-weight: bold;
+            color: red;
+            text-shadow: 0 0 10px yellow, 0 0 20px yellow;
+        }
+        .navbar {
+            background: #111;
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 0 15px cyan;
+            z-index: 1;
+        }
+        .navbar a {
+            color: cyan;
+            text-decoration: none;
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+        .navbar a:hover {
+            color: yellow;
+        }
+        .story-container {
+            margin-top: 80px;
+            padding: 20px;
+        }
+        .message {
+            margin: 20px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 10px;
+            box-shadow: 0 0 15px cyan;
+            display: inline-block;
+            animation: fadeIn 2s linear;
+            max-width: 600px;
+        }
+        .boy {
+            background-color: #1e90ff;
+        }
+        .friend {
+            background-color: #32cd32;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .game-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .game-card {
+            width: 200px;
+            height: 200px;
+            margin: 10px;
+            background: #111;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px cyan;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .game-card:hover {
+            box-shadow: 0 0 30px cyan;
+            transform: scale(1.1);
+        }
+        .game-frame {
+            display: none;
+            width: 800px;
+            height: 600px;
+            border: none;
+            margin: 20px auto;
+        }
+        .game-area {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            overflow: hidden;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .military {
+            background: url('military_background.jpg') no-repeat center center;
+        }
+        .character, .enemy, .meteor, .wall, .supervillain, .bullet {
+            position: absolute;
+        }
+        .character {
+            width: 50px;
+            height: 50px;
+            background-color: blue;
+        }
+        .enemy {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+        }
+        .meteor {
+            width: 50px;
+            height: 50px;
+            background-color: yellow;
+        }
+        .wall {
+            background-color: #666;
+        }
+        .supervillain {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            border-radius: 50%;
+        }
+        .bullet {
+            width: 10px;
+            height: 10px;
+            background-color: yellow;
+            border-radius: 50%;
+        }
+        .neon-x {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 200px;
+            font-weight: bold;
+            color: cyan;
+            text-shadow: 0 0 20px cyan, 0 0 40px cyan, 0 0 60px cyan, 0 0 80px cyan;
+            animation: blink 1.5s infinite;
+            z-index: 2;
+        }
+        #intro {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 3;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        @keyframes fadeOut {
+            to { opacity: 0; }
+        }
+        @keyframes jump {
+            0% { bottom: 0; }
+            50% { bottom: 150px; }
+            100% { bottom: 0; }
+        }
+        .jumping-game {
+            background: #f7f7f7;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .dino {
+            width: 44px;
+            height: 44px;
+            background-color: yellow;
+            position: absolute;
+            bottom: 0;
+            left: 50px;
+        }
+        .dino.jumping {
+            animation: jump 0.6s linear;
+        }
+        .obstacle {
+            width: 20px;
+            height: 40px;
+            background: #000;
+            position: absolute;
+            bottom: 0;
+            right: -20px;
+        }
+        .score {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div id="intro">
+        <div class="neon-x">X</div>
+    </div>
+    <div class="navbar">
+        <a href="#">Home</a>
+        <a href="#">Games</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </div>
+    <div class="logo">X⚡</div>
+    <h1>Welcome to Xgames</h1>
+    <p>Play the best browser games online!</p>
+
+    <div class="story-container" id="storyContainer">
+        <h2>Story 1</h2>
+        <!-- Messages will be added here by JavaScript -->
+    </div>
+
+    <div class="game-container">
+        <div class="game-card" id="game1Card">
+            Game 1
+        </div>
+        <div class="game-card" id="game2Card">
+            Game 2
+        </div>
+    </div>
+
+    <div class="game-frame" id="game1">
+        <div class="game-area military" id="gameArea1"></div>
+    </div>
+
+    <div class="game-frame" id="game2">
+        <div class="jumping-game" id="gameArea2">
+            <div class="dino" id="dino"></div>
+            <div class="score" id="score">0</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 Xgames. All rights reserved.</p>
+    </div>
+
+    <script>
+        // Neon X animation
+        const intro = document.getElementById('intro');
+        setTimeout(() => {
+            intro.style.animation = 'fadeOut 1s forwards';
+            setTimeout(() => {
+                intro.style.display = 'none';
+            }, 1000);
+        }, 3000); // Hide neon X after 3 seconds
+
+        // Story 1
+        const messages = [
+            { text: "Boy: Hey guys, have you heard about Xgames?", type: "boy" },
+            { text: "Friend 1: Yeah, I heard it's a great place to play fun browser games!", type: "friend" },
+            { text: "Friend 2: I love the variety they offer. There's something for everyone.", type: "friend" },
+            { text: "Boy: Exactly! And the best part is, you can play them right in your browser.", type: "boy" },
+            { text: "Friend 1: No downloads or installations needed. It's so convenient.", type: "friend" },
+            { text: "Friend 2: We should definitely play together sometime. It would be so much fun!", type: "friend" },
+            { text: "Boy: Absolutely! Let's plan a gaming session this weekend.", type: "boy" }
+        ];
+
+        const storyContainer = document.getElementById('storyContainer');
+        let index = 0;
+
+        function displayNextMessage() {
+            if (index < messages.length) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message ' + messages[index].type;
+                messageDiv.textContent = messages[index].text;
+                storyContainer.appendChild(messageDiv);
+
+                index++;
+                setTimeout(displayNextMessage, 4000); // Display the next message after 4 seconds
+            }
+        }
+
+        displayNextMessage();
+
+        // Game 1: Shooting game (initially hidden)
+        const gameArea1 = document.getElementById('gameArea1');
+        const game1Frame = document.getElementById('game1');
+        let game1Started = false;
+
+        function startGame1() {
+            if (game1Started) return;
+            game1Started = true;
+            game1Frame.style.display = 'block';
+
+            function createSupervillain() {
+                const villain = document.createElement('div');
+                villain.classList.add('supervillain');
+                villain.style.top = Math.random() * (gameArea1.clientHeight - 50) + 'px';
+                villain.style.left = Math.random() * (gameArea1.clientWidth - 50) + 'px';
+                gameArea1.appendChild(villain);
+
+                villain.addEventListener('click', () => {
+                    gameArea1.removeChild(villain);
+                });
+
+                setTimeout(() => {
+                    if (gameArea1.contains(villain)) {
+                        gameArea1.removeChild(villain);
+                    }
+                }, 3000);
+            }
+
+            function shootBullet(event) {
+                const bullet = document.createElement('div');
+                bullet.classList.add('bullet');
+                bullet.style.top = event.clientY - 5 + 'px';
+                bullet.style.left = event.clientX - 5 + 'px';
+                gameArea1.appendChild(bullet);
+
+                setTimeout(() => {
+                    gameArea1.removeChild(bullet);
+                }, 1000);
+            }
+
+            gameArea1.addEventListener('click', shootBullet);
+            setInterval(createSupervillain, 1000);
+        }
+
+        document.getElementById('game1Card').addEventListener('click', startGame1);
+
+        // Game 2: Jumping game (initially hidden)
+        const gameArea2 = document.getElementById('gameArea2');
+        const game2Frame = document.getElementById('game2');
+        const dino = document.getElementById('dino');
+        const scoreDisplay = document.getElementById('score');
+        let game2Started = false;
+        let isJumping = false;
+        let gravity = 0.9;
+        let position = 0;
+        let score = 0;
+
+        function startGame2() {
+            if (game2Started) return;
+            game2Started = true;
+            game2Frame.style.display = 'block';
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === ' ' || event.key === 'ArrowUp') {
+                    jump();
+                }
+            });
+
+            function jump() {
+                if (isJumping) return;
+                isJumping = true;
+                dino.classList.add('jumping');
+                setTimeout(() => {
+                    dino.classList.remove('jumping');
+                    isJumping = false;
+                }, 600);
+            }
+
+            function createObstacle() {
+                const obstacle = document.createElement('div');
+                obstacle.classList.add('obstacle');
+                gameArea2.appendChild(obstacle);
+                let obstaclePosition = gameArea2.clientWidth - 20;
+
+                let timer = setInterval(() => {
+                    if (obstaclePosition < -20) {
+                        clearInterval(timer);
+                        gameArea2.removeChild(obstacle);
+                    } else if (obstaclePosition > 0 && obstaclePosition < 70 && position < 40) {
+                        clearInterval(timer);
+                        alert('Game Over! Your score: ' + score);
+                        // Reset game
+                        game2Started = false;
+                        game2Frame.style.display = 'none';
+                        gameArea2.innerHTML = '<div class="dino" id="dino"></div><div class="score" id="score">0</div>';
+                        return;
+                    } else {
+                        obstaclePosition -= 10;
+                        obstacle.style.right = obstaclePosition + 'px';
+                    }
+                }, 20);
+                setTimeout(createObstacle, Math.random() * 2000 + 1000);
+            }
+
+            function startObstacles() {
+                setTimeout(createObstacle, 5000);
+            }
+
+            function updateScore() {
+                if (!game2Started) return;
+                score++;
+                scoreDisplay.textContent = score;
+                setTimeout(updateScore, 100);
+            }
+
+            startObstacles();
+            updateScore();
+        }
+
+        document.getElementById('game2Card').addEventListener('click', startGame2);
+    </script>
+</body>
+</html>
